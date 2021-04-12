@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 
-export const connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'hapi-server-apr2021',
     password: 'abc123!',
@@ -13,4 +13,13 @@ export const initializeDbConnection = () => {
 
 export const disconnectFromDb = () => {
     return connection.end();
+}
+
+export const query = (queryString, escapedValues = []) => {
+    return new Promise((resolve, reject) => {
+        connection.query(queryString, escapedValues, (error, results) => {
+            if (error) reject(error);
+            resolve(results);
+        });
+    })
 }

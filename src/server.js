@@ -1,5 +1,6 @@
 import Hapi from '@hapi/hapi';
 import { initializeDbConnection, disconnectFromDb } from './db';
+import { getAllListingsRoute } from './routes/getAllListingsRoute';
 
 let server;
 
@@ -11,23 +12,7 @@ const start = async () => {
 
     initializeDbConnection();
 
-    server.route({
-        method: 'GET',
-        path: '/hello/{name}',
-        handler: (req, h) => {
-            const name = req.params.name;
-            return h.response(`Hello ${name}!`).code(201);
-        }
-    });
-
-    server.route({
-        method: 'POST',
-        path: '/hello',
-        handler: (req, h) => {
-            const name = req.payload.name;
-            return h.response(`Hello ${name}!`).code(201);
-        }
-    });
+    server.route(getAllListingsRoute);
 
     await server.start();
     console.log(`Server is listening on ${server.info.uri}`);

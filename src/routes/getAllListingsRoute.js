@@ -1,9 +1,10 @@
-import { connection } from '../db';
+import { query } from '../db';
 
 export const getAllListingsRoute = {
     method: 'GET',
-    path: '/listings',
-    handler: (req, h) => {
-
+    path: '/api/listings',
+    handler: async (req, h) => {
+        const listings = await query('SELECT * FROM listings', []);
+        return listings;
     }
 }
